@@ -1,0 +1,31 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container mt-3">
+  <div class='card mb-3'>
+      <div class="row g-0">
+        <div class="col-md-auto">
+          <img class='rounded-start' src='{{ owner.gravatar }}' height="175px">
+        </div>
+        <div class="col-md-auto">
+          <div class='card-body'>
+            <h5 class='class-title'>{{ owner.name }}</h5>    
+            <h6 class="card-subtitle mb-2">{{ club.name }}</h6>
+            <h6 class='card-subtitle mb-2'>{{ club.location }}</h6>
+            <h6 class='card-subtitle mb-2 text-muted'>{{ members }} members</h6>
+            <p class='card-text'>{{ club.description }}</p>
+          </div>
+      </div>
+    </div>
+  </div>
+
+  {% for tour in tournaments %}
+    <div class='card mb-3'>
+      <div class='card-body'>
+        <h5 class='class-title'>{{ tour.name }}</h5>
+        <h6 class='card-subtitle mb-2 text-muted'>{{ tour.members }} participants</h6>
+        <p class="card-text">{{ tour.description }}</p>
+      </div>   
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

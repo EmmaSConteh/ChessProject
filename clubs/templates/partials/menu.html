@@ -1,0 +1,16 @@
+<div class="collapse navbar-collapse" id="navbarNavDropdown">
+  <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+    <li class="nav-item active">
+      <a class="nav-option" href="{% url 'home' %}">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-option" href="{% url 'clubs' %}">Clubs</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-option" href="{% url 'create_tournament' %}">Create Tournaments</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-option" href="{% url 'profile' %}">Profile</a>
+  </ul>
+  <a class="nav-option" href="{% url 'log_out' %}">Log Out</a>
+</div>

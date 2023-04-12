@@ -1,0 +1,27 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row content">
+    <div class="col-12">
+      <center><img src="{{ user.gravatar }}" alt="Gravatar of {{ user.username }}" class="rounded-circle profile-image" ></center>
+      <div class="profile-text">
+        <center>
+        <h3 class="profile-title">{{ user.name }}</h3>
+        <p class="profile-username">{{ user.email }}</p>
+        </center>
+      </div>
+    </div>
+  </div>
+  <div class="row content">
+    <div class="col-12">
+      <center>
+        <p class="profile-bio">Bio: {{ user.bio }}</p>
+        <p class="profile-ps">Personal Statement: {{ user.personal_statement }}</p>
+        <p class="profile-name">Chess Experience: {{ user.get_chess_experience_display }}</p>
+        <a class="btn btn-primary mb-3" href="{% url 'edit_profile' %}">Edit Details</a><br>
+        <a class="btn btn-primary" href="{% url 'password' %}">Change Password</a>
+      </center>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<a href="{% url 'create_tournament' %}">Create a tournament</a>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name Of Tournament</th>
+      <th scope="col">Club</th>
+      <th scope="col">Description</th>
+      <th scope="col">Sign Up Deadline</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tournament in tournaments %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <th>{{ tournament.name }}</th>
+      <th>{{ tournament.club }}</th>
+      <th>{{ tournament.description }}</th>
+      <th>{{ tournament.signup_deadline }}</th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

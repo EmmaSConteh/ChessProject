@@ -1,0 +1,63 @@
+<!--HTML page for applications of clubs. -->
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row ">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h1>Application for {{ membership.foreign_club }} by {{membership.foreign_user.name}}</h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-lg-4">
+        <p>Name: {{membership.foreign_user.name}}</p>
+        <p>Email: {{membership.foreign_user.email}}</p>
+        <p>Bio: {{membership.foreign_user.bio}}</p>
+        <p>Chess Experience: {{membership.foreign_user.get_chess_experience_display}}</p>
+        <p>
+          <button class="btn btn-success" value="{{membership.foreign_user}},{{membership.foreign_club}}" onclick="changeRank(this.value, true)">Approve</button>
+          <button class="btn btn-danger" value="{{membership.foreign_user}},{{membership.foreign_club}}" onclick="changeRank(this.value, false)">Reject</button>
+        </p>
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-4">
+        <p><strong>Personal Statement:</strong></p>
+        <p>{{membership.foreign_user.personal_statement}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+
+  function changeRank(value, is_promoting) {
+    let [user_email, club_name] = value.split(',');
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 200) {
+        let success = this.response;
+        if(success == "1") {
+          window.opener.getClub();
+          close();
+        }
+      }
+    }
+    request.open("POST", "{% url 'change_rank' %}?");
+    request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.send("email=" + user_email + "&name=" + club_name +"&promoting=" + is_promoting);
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'base_content.html' %}
+{% block content %}
+<div class="container mt-3">
+  <div class="tournament-info">
+    <h1>Tournament: {{tournament.name}}</h1>
+    <h2>Club: {{tournament.club.name}}</h2>
+    <h3>Sign up deadline: {{tournament.signup_deadline}}</h3>
+  </div>
+  <div class="content-box">
+    <div id="main-content" class="card shadow d-flex">
+    </div>
+
+    <div id="side-content">
+      <div class="side-box card shadow d-flex">
+        <ul class="nav nav-tabs mb-3 shadow-sm" id="sideTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="participants-pane-tab" data-bs-toggle="tab" data-bs-target="#participants-pane" type="button" role="tab" aria-controls="participants-pane" aria-selected="true">Participants</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="organizers-pane-tab" data-bs-toggle="tab" data-bs-target="#organizers-pane" type="button" role="tab" aria-controls="organizers-pane" aria-selected="false">Organizers</button>
+          </li>
+        </ul>
+
+        <div class="tab-content container-fluid" id="sideTabContent">
+          <div class="tab-pane fade show active" id="participants-pane" role="tabpanel" aria-labelledby="participants-pane-tab">
+            <div id="participants-list">
+              <p>Participants: {{participants|length}}/{{tournament.capacity}}</p>
+              <table class="table table-hover">
+                <thead>
+                  {% if participants %}
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Chess Experience</th>
+                    </tr>
+                  {% endif %}
+                </thead>
+                <tbody>
+                  {% for p in participants %}
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <th>{{p.participant.name}}</th>
+                      <th>{{p.participant.get_chess_experience_display}}</th>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="organizers-pane" role="tabpanel" aria-labelledby="organizers-pane-tab">
+            <div id="organizers-list">
+              <select class="form-select" name="" id="coorganizer-select">
+              </select>
+              <button class="btn btn-primary" onclick="post_new_coorganizer()">Add Co-Organizer</button>
+              <table class="table table-hover">
+                <thead>
+                  {% if organizers %}
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Role</th>
+                      <th>Email</th>
+                    </tr>
+                  {% endif %}
+                </thead>
+                <tbody id="organizers-table-body" onload="getCoorganizers()">
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function renderCoorganizers(response){
+    let table_body = document.getElementById("organizers-table-body");
+    let text = "";
+    // let form_select = document.getElementById("coorganizer-form").querySelector("select");
+    for(var i = 0; i < response.organizers.length; ++i){
+      text += "<tr>";
+
+      text += "<th scope='row'>" + (i+1) + "</th>";
+
+      text += "<th>" + response.organizers[i]["name"] + "</th>";
+      text += "<th>" + response.organizers[i]["role"] + "</th>";
+      text += "<th>" + response.organizers[i]["email"] + "</th>";
+
+      text += "</tr>";
+    }
+
+    let coorg_select = document.getElementById("coorganizer-select");
+    coorg_select.innerHTML = "";
+
+    let emptyOption = document.createElement("option");
+    emptyOption.value = null;
+    emptyOption.innerHTML = "-------";
+    coorg_select.appendChild(emptyOption);
+    for(var i = 0; i < response.available_officers.length; ++i){
+      let officer = document.createElement("option");
+      officer.vaule = response.available_officers[i].id;
+      officer.innerHTML = response.available_officers[i].email;
+      coorg_select.appendChild(officer);
+    }
+
+    table_body.innerHTML = text;
+  }
+
+  function getCoorganizers(){
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+      if(this.readyState == 4 && this.status == 200) {
+        renderCoorganizers(JSON.parse(this.response));
+      }
+    }
+    request.open("GET", "{% url 'manage_tournament_coorganizers' %}"+"?club="+encodeURI("{{tournament.club.name|safe}}")+"&tournament="+encodeURI("{{tournament.name|safe}}"));
+    request.send();
+  }
+
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+  }
+
+  function post_new_coorganizer(){
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+      if(this.readyState == 4 && this.status == 201) {
+        getCoorganizers();
+      }
+    }
+    let selection = document.getElementById("coorganizer-select");
+    let organizer = selection.options[selection.selectedIndex].value;
+    if(organizer) {
+      request.open("POST", "{% url 'manage_tournament_coorganizers' %}");
+      request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      request.send("club="+encodeURI("{{tournament.club.name|safe}}")+"&tournament="+encodeURI("{{tournament.name|safe}}")+"&organizer="+encodeURI(organizer));
+    }
+  }
+
+  getCoorganizers();
+</script>
+{% endblock %}

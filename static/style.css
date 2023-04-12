@@ -1,0 +1,165 @@
+nav{
+	background-color: #1c1b1a;
+	font-size: 1.4rem;
+}
+
+.chess-banner{
+	background: url("images/chess-banner.png");
+	height: 40px;
+}
+
+.nav-option, .nav-logo{
+	text-decoration: none;
+	padding-left: 10px;
+	padding-right: 30px;
+	color: #ffffff;
+}
+
+.nav-option:hover{
+	color: #b3b3b3;
+}
+
+#top-content{
+	margin: 10px 20px;
+	width: calc(100vw - 40px);
+}
+
+#clubs-selection-title{
+	display: inline-block;
+	font-size: 1.5rem;
+}
+
+#clubs-selection{
+	font-size: 1.1rem;
+	padding: 6px 3px;
+}
+
+.content-box{
+	display: grid;
+	grid-template-areas: "main side";
+	grid-template-columns: 5fr 2fr;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 10px;
+	height: calc(100vh - 135px);
+	max-height: calc(100vh - 135px);
+}
+
+#main-content, #side-content{
+	margin: 0px;
+	height: calc(100vh - 135px);
+	max-height: calc(100vh - 135px);
+}
+
+#main-content{
+	margin-right: 10px;
+	grid-area: main;
+}
+
+#side-content{
+	display: grid;
+	grid-area: side;
+	grid-template-rows: 1fr 1fr;
+	margin-left: 10px;
+}
+
+.side-box{
+	height: calc(50vh - 75.25px);
+	max-height: calc(50vh - 75.25px);
+}
+
+#member-list, #application-list, #tournament-list{
+	max-height: calc(100vh - 210px);
+	overflow-y: auto;
+}
+
+#member-list, #application-list{
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+}
+
+#pending-list, #rejected-list{
+	overflow-y: auto;
+	max-height: calc(50vh - 150.25px);
+}
+
+#club-description{
+	box-sizing: border-box;
+	padding: 30px;
+}
+
+h1.cover-heading {
+  font-size: 4rem;
+}
+
+p.cover-text {
+  font-size: 1.7rem;
+}
+
+#cover-image {
+  background: url('images/chess-board.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+
+.cover-card {
+  background-color: rgb(245, 245, 245);
+  max-width: 30rem;
+  padding-top: 30px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 30px;
+  border-radius: 25px;
+}
+
+.cover-card-block {
+  opacity: 1
+}
+
+.cover {
+  object-fit: cover;
+  width: 50px;
+  height: 100px;
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 1200px) {
+	#member-list, #application-list{
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 992px) {
+	#member-list, #application-list{
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 768px) {
+	.top-content{
+		margin: 0px;
+	}
+
+	.content-box{
+		grid-template-areas: "side" "main";
+		grid-template-columns: 1fr;
+	}
+
+	#main-content, .side-box{
+		margin: 0px;
+		margin-top: 10px;
+	}
+
+	#member-list, #application-list{
+		grid-template-columns: repeat(2, 1fr);
+		margin-bottom: 30px;
+	}
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	#member-list, #application-list{
+		grid-template-columns: repeat(1, 1fr);
+	}
+}

@@ -1,0 +1,12 @@
+{% extends 'base_content.html'%}
+{% block content %}
+<div class="container mt-3">
+    <h1>Create Tournament</h1>
+    <form action="{% url 'create_tournament' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p>Please enter signup deadline in the format "MM/DD/YYYY HH:MM"</p>
+      <input type="submit" value="Create Tournament" class="btn btn-primary">
+    </form>
+</div>
+{% endblock %}
