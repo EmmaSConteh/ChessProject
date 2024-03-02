@@ -1,13 +1,5 @@
 # Chess Tournament System
 
-## Co-Authors
-
-- Ravshanbek (Rav) Rozukulov (k20016722)
-- Fathima (JD) Jamal-Deen (k1922032)
-- Nathan Essel (k2036035)
-- Emma Conteh (k20045772)
-- Aadit Jain (k20081379)
-
 ## Deployed Site: 
 Deployed app: https://floating-spire-81612.herokuapp.com  
 Administrative interface: https://floating-spire-81612.herokuapp.com/admin/
@@ -26,3 +18,11 @@ Link to the article: https://heemayl.net/posts/django-custom-user-model-without-
 
 - 12 lines defining the actual User model
 - 70 lines in admin.py file defining the following classes: __UserAdmin__, __UserChangeForm__, __UserCreationForm__
+
+## Co-Authors
+
+- Ravshanbek (Rav) Rozukulov 
+- Fathima (JD) Jamal-Deen 
+- Nathan Essel 
+- Emma Conteh 
+- Aadit Jain 
