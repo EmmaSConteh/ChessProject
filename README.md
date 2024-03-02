@@ -1,7 +1,7 @@
-# Team Ocelot
-# SEG Small Group (Chess) Project
+# Chess Tournament System
 
-## Team Members:
+## Co-Authors
+
 - Ravshanbek (Rav) Rozukulov (k20016722)
 - Fathima (JD) Jamal-Deen (k1922032)
 - Nathan Essel (k2036035)
